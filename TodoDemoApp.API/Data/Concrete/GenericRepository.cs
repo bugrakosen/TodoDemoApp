@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TodoDemoApp.API.Data.Abstract;
@@ -16,6 +17,9 @@ namespace TodoDemoApp.API.Data.Concrete
         {
             _todoAppDbContext = todoAppDbContext;
         }
+
+        public async Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, bool>> include = null) 
+            => await _todoAppDbContext.Set<TEntity>().Where(include).ToListAsync().ConfigureAwait(false);
 
         public async Task<List<TEntity>> GetEntitiesAsync(Expression<Func<TEntity, object>> include = null)
             => include == null ? await _todoAppDbContext.Set<TEntity>().ToListAsync().ConfigureAwait(false)

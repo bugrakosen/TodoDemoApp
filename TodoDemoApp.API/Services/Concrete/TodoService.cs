@@ -41,6 +41,7 @@ namespace TodoDemoApp.API.Services.Concrete
                                   Content = todo.Content,
                                   ReminMeDate = todo.ReminMeDate,
                                   DueDate = todo.DueDate,
+                                  IsFavorite = todo.IsFavorite,
                                   CreationDate = todo.CreationDate,
                                   LastModificationDate = todo.LastModificationDate
                               };
@@ -65,6 +66,7 @@ namespace TodoDemoApp.API.Services.Concrete
                 CategoryId = todo.CategoryId,
                 CategoryName = todo.Category?.Name,
                 DueDate = todo.DueDate,
+                IsFavorite = todo.IsFavorite,
                 CreationDate = todo.CreationDate,
                 LastModificationDate = todo.LastModificationDate
             };
@@ -84,7 +86,8 @@ namespace TodoDemoApp.API.Services.Concrete
                 ReminMeDate = todoDTO.ReminMeDate,
                 CategoryId = todoDTO.CategoryId,
                 DueDate = todoDTO.DueDate,
-                CreationDate = DateTime.Now
+                CreationDate = DateTime.Now,
+                IsFavorite = todoDTO.IsFavorite
             };
 
             return await _todoRepository.AddAsync(todo).ConfigureAwait(false);
@@ -108,6 +111,7 @@ namespace TodoDemoApp.API.Services.Concrete
             toBeUpdatedTodo.ReminMeDate = todoDTO.ReminMeDate;
             toBeUpdatedTodo.CategoryId = todoDTO.CategoryId;
             toBeUpdatedTodo.DueDate = todoDTO.DueDate;
+            toBeUpdatedTodo.IsFavorite = todoDTO.IsFavorite;
             toBeUpdatedTodo.LastModificationDate = DateTime.Now;
 
             await _todoRepository.UpdateAsync(toBeUpdatedTodo).ConfigureAwait(false);
@@ -129,6 +133,21 @@ namespace TodoDemoApp.API.Services.Concrete
                 throw new MilvaException("Veritabanında varolmayan bir kaydı güncellemeye çalışıyorsunuz.");
 
             await _todoRepository.DeleteAsync(toBeDeletedTodo).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Sended favorites as mark.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isFavorite"></param>
+        /// <returns></returns>
+        public async Task MarkAsIsFavoriteAsync(Guid id, bool isFavorite)
+        {
+            var todo = await _todoRepository.GetEntityAsync(id).ConfigureAwait(false);
+
+            todo.IsFavorite = isFavorite;
+
+            await _todoRepository.UpdateAsync(todo).ConfigureAwait(false);
         }
     }
 }

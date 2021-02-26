@@ -21,6 +21,8 @@ namespace TodoDemoApp.API.DTOs
         /// </summary>
         public DateTime? DueDate { get; set; }
 
+        public bool IsFavorite { get; set; }
+
         /// <summary>
         /// Foreing key of category.
         /// </summary>

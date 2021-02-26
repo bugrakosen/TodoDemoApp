@@ -13,6 +13,7 @@ using TodoDemoApp.API.Data.Abstract;
 using TodoDemoApp.API.Data.Concrete;
 using TodoDemoApp.API.DTOs;
 using TodoDemoApp.API.Entity;
+using TodoDemoApp.API.Seed;
 using TodoDemoApp.API.Services.Abstract;
 using TodoDemoApp.API.Services.Concrete;
 
@@ -88,17 +89,7 @@ namespace TodoDemoApp.API
 
             dbContext.Database.MigrateAsync().Wait();
 
-            var categories = dbContext.Set<Category>();
-
-            int categoryCount = categories.CountAsync().Result;
-
-            if (categoryCount == 0)
-            {
-                categories.Add(new Category { Name = "Yapacaklarým" });
-                categories.Add(new Category { Name = "Bugün Yapacaklarým" });
-            }
-
-            dbContext.SaveChangesAsync().Wait();
+            SeedData.ResetDatas().Wait();
 
             #endregion
 

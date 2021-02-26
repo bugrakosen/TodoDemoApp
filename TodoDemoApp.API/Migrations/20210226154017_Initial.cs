@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TodoDemoApp.API.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,8 +31,8 @@ namespace TodoDemoApp.API.Migrations
                     Content = table.Column<string>(nullable: true),
                     ReminMeDate = table.Column<DateTime>(nullable: true),
                     DueDate = table.Column<DateTime>(nullable: true),
-                    CategoryId = table.Column<Guid>(nullable: false),
-                    CategoryName = table.Column<string>(nullable: true)
+                    IsFavorite = table.Column<bool>(nullable: false),
+                    CategoryId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

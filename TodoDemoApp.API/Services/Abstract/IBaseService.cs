@@ -39,5 +39,13 @@ namespace TodoDemoApp.API.Services.Abstract
         /// <param name="id"></param>
         /// <returns></returns>
         Task DeleteEntityAsync(Guid id);
+
+        /// <summary>
+        /// Sended favorites as mark.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isFavorite"></param>
+        /// <returns></returns>
+        Task MarkAsIsFavoriteAsync(Guid id, bool isFavorite);
     }
 }

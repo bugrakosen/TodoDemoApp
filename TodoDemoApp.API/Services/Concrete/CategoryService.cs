@@ -32,13 +32,14 @@ namespace TodoDemoApp.API.Services.Concrete
         /// <returns></returns>
         public async Task<List<CategoryDTO>> GetEntitiesAsync()
         {
-            var categories = await _categoryRepository.GetEntitiesAsync().ConfigureAwait(false);
+            var categories = await _categoryRepository.GetEntitiesAsync(i => i.Todos).ConfigureAwait(false);
 
             var categoryDTOList = from category in categories
                                   select new CategoryDTO
                                   {
                                       Id = category.Id,
                                       Name = category.Name,
+                                      TodoCount = category.Todos?.Count ?? 0,
                                       CreationDate = category.CreationDate,
                                       LastModificationDate = category.LastModificationDate
                                   };
@@ -55,14 +56,15 @@ namespace TodoDemoApp.API.Services.Concrete
         {
             var category = await _categoryRepository.GetEntityAsync(id, i => i.Todos).ConfigureAwait(false);
 
-            if(category == null)
+            if (category == null)
                 throw new MilvaException("Veritabanında varolmayan bir kayda erişmeye çalışıyorsunuz.");
 
             return new CategoryDTO
             {
                 Id = category.Id,
                 Name = category.Name,
-                Todos = !category.Todos.IsNullOrEmpty() 
+                TodoCount = category.Todos?.Count ?? 0,
+                Todos = !category.Todos.IsNullOrEmpty()
                         ? (from todo in category.Todos
                            select new TodoDTO
                            {
@@ -132,6 +134,11 @@ namespace TodoDemoApp.API.Services.Concrete
                 throw new MilvaException("Veritabanında varolmayan bir kaydı güncellemeye çalışıyorsunuz.");
 
             await _categoryRepository.DeleteAsync(toBeDeletedCategory).ConfigureAwait(false);
+        }
+
+        public Task MarkAsIsFavoriteAsync(Guid id, bool isFavorite)
+        {
+            throw new NotImplementedException();
         }
     }
 }

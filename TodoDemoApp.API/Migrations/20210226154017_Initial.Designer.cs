@@ -9,8 +9,8 @@ using TodoDemoApp.API.Data;
 namespace TodoDemoApp.API.Migrations
 {
     [DbContext(typeof(TodoAppDbContext))]
-    [Migration("20210226130354_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210226154017_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,9 +48,6 @@ namespace TodoDemoApp.API.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("CategoryName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.Property<string>("Content")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -59,6 +56,9 @@ namespace TodoDemoApp.API.Migrations
 
                     b.Property<DateTime?>("DueDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsFavorite")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime?>("LastModificationDate")
                         .HasColumnType("datetime(6)");

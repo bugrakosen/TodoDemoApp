@@ -56,5 +56,13 @@ namespace TodoDemoApp.API.Controllers
             return Ok("İşlem Başarılı");
         }
 
+        [HttpPut("Todo/{id}/Mark/{isFavorite}")]
+        public async Task<IActionResult> MarkAsFavoriteTodoAsync(Guid id, bool isFavorite)
+        {
+            await _todoService.MarkAsIsFavoriteAsync(id, isFavorite).ConfigureAwait(false);
+
+            return Ok("İşlem başarılı.");
+        }
+
     }
 }

@@ -20,11 +20,15 @@ namespace TodoDemoApp.API.Entity
         public DateTime? DueDate { get; set; }
 
         /// <summary>
+        /// Fovarite check
+        /// </summary>
+        public bool IsFavorite { get; set; }
+
+        /// <summary>
         /// Foreing key of category.
         /// </summary>
         public Guid CategoryId { get; set; }
 
-        public string CategoryName { get; set; }
 
         /// <summary>
         /// Navigation property of category.
